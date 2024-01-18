@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FormIO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body>
+<div id="builder"></div>
+<script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script>
+    $(document).ready(() => {
+        $.ajax({
+
+        })
+
+        Formio.createForm(document.getElementById('builder'))
+    })
+
+    Formio.createForm(document.getElementById('builder'), {
+        "components": [
+            {
+                "autofocus": false,
+                "input": true,
+                "tableView": true,
+                "inputType": "text",
+                "inputMask": "",
+                "label": "Họ và tên",
+                "key": "hvtn",
+                "placeholder": "",
+                "prefix": "",
+                "suffix": "",
+                "multiple": false,
+                "defaultValue": "",
+                "protected": false,
+                "unique": false,
+                "persistent": true,
+                "hidden": false,
+                "clearOnHide": true,
+                "spellcheck": true,
+                "validate": {
+                    "required": false,
+                    "minLength": "",
+                    "maxLength": "",
+                    "pattern": "",
+                    "custom": "",
+                    "customPrivate": false
+                },
+                "conditional": {
+                    "show": "",
+                    "eq": ""
+                },
+                "type": "textfield",
+                "labelPosition": "top",
+                "inputFormat": "plain",
+                "tags": [],
+                "properties": {}
+            },
+            {
+                "autofocus": false,
+                "input": true,
+                "tableView": true,
+                "inputType": "radio",
+                "label": "Giới tính",
+                "key": "gender",
+                "values": [
+                    {
+                        "value": "male",
+                        "label": "Nam",
+                        "shortcut": ""
+                    },
+                    {
+                        "value": "female",
+                        "label": "Nữ",
+                        "shortcut": ""
+                    },
+                    {
+                        "value": "other",
+                        "label": "Khác",
+                        "shortcut": ""
+                    }
+                ],
+                "defaultValue": "",
+                "protected": false,
+                "fieldSet": false,
+                "persistent": true,
+                "hidden": false,
+                "clearOnHide": true,
+                "validate": {
+                    "required": false,
+                    "custom": "",
+                    "customPrivate": false
+                },
+                "type": "radio",
+                "labelPosition": "top",
+                "optionsLabelPosition": "right",
+                "tags": [],
+                "conditional": {
+                    "show": "",
+                    "eq": ""
+                },
+                "properties": {},
+                "lockKey": true
+            },
+            {
+                "autofocus": false,
+                "input": true,
+                "label": "Submit",
+                "tableView": false,
+                "key": "submit",
+                "size": "md",
+                "leftIcon": "",
+                "rightIcon": "",
+                "block": false,
+                "action": "submit",
+                "disableOnInvalid": false,
+                "theme": "primary",
+                "type": "button"
+            }
+        ]
+    });
+</script>
+</body>
+</html>
