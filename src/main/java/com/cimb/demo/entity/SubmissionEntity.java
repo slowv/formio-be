@@ -25,8 +25,7 @@ import java.util.List;
 @Table(
         name = "submissions",
         indexes = {
-                @Index(columnList = "form_id"),
-                @Index(columnList = "owner")
+                @Index(columnList = "form_id")
         }
 )
 public class SubmissionEntity extends AbstractAuditingEntity<String> implements Serializable {
@@ -39,23 +38,15 @@ public class SubmissionEntity extends AbstractAuditingEntity<String> implements 
     @JoinColumn(name = "form_id", referencedColumnName = "id", nullable = false)
     private FormEntity form;
 
-    @OneToOne
-    @JoinColumn(name = "owner", referencedColumnName = "id")
-    private SubmissionEntity owner;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "submission_role",
+//            joinColumns = @JoinColumn(name = "role_id"),
+//            inverseJoinColumns = @JoinColumn(name = "submission_id"))
+//    private List<RoleEntity> role = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "submission_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "submission_id"))
-    private List<RoleEntity> role = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "submission_access",
-            joinColumns = @JoinColumn(name = "access_id"),
-            inverseJoinColumns = @JoinColumn(name = "submission_id"))
-    private List<AccessEntity> access = new ArrayList<>();
+    @Column(name = "access", columnDefinition = "json")
+    private String access;
 
     @Column(name = "metadata", columnDefinition = "json")
     @Comment("Configurable metadata. Ex: {headers: connection: keep-alive}")

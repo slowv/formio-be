@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
 @Slf4j
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 public class FormControllerImpl implements FormController {
@@ -32,6 +34,12 @@ public class FormControllerImpl implements FormController {
 
     @Override
     public ResponseEntity<FormDTO> getForm(final String formId) {
-        return null;
+        log.debug("REST request to get a Form : {}", formId);
+        return ResponseEntity.ok(formService.get(formId));
+    }
+
+    @Override
+    public ResponseEntity<FormDTO> update(final String formId, final FormDTO formDTO) {
+        return ResponseEntity.ok(formService.update(formId, formDTO));
     }
 }

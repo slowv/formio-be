@@ -15,116 +15,27 @@
 <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script>
+    const BASE_URL = "http://localhost:8080";
     $(document).ready(() => {
-        $.ajax({
-
-        })
-
-        Formio.createForm(document.getElementById('builder'))
+        loadFormAPI('0eed6580-5a12-4d52-971b-62fdff895a24')
     })
 
-    Formio.createForm(document.getElementById('builder'), {
-        "components": [
-            {
-                "autofocus": false,
-                "input": true,
-                "tableView": true,
-                "inputType": "text",
-                "inputMask": "",
-                "label": "Họ và tên",
-                "key": "hvtn",
-                "placeholder": "",
-                "prefix": "",
-                "suffix": "",
-                "multiple": false,
-                "defaultValue": "",
-                "protected": false,
-                "unique": false,
-                "persistent": true,
-                "hidden": false,
-                "clearOnHide": true,
-                "spellcheck": true,
-                "validate": {
-                    "required": false,
-                    "minLength": "",
-                    "maxLength": "",
-                    "pattern": "",
-                    "custom": "",
-                    "customPrivate": false
-                },
-                "conditional": {
-                    "show": "",
-                    "eq": ""
-                },
-                "type": "textfield",
-                "labelPosition": "top",
-                "inputFormat": "plain",
-                "tags": [],
-                "properties": {}
+    function loadFormAPI(formId) {
+        $.ajax({
+            url: BASE_URL + `/api/forms/${formId}`,
+            method: 'GET',
+            success: function (res) {
+                generateForm(res.components)
             },
-            {
-                "autofocus": false,
-                "input": true,
-                "tableView": true,
-                "inputType": "radio",
-                "label": "Giới tính",
-                "key": "gender",
-                "values": [
-                    {
-                        "value": "male",
-                        "label": "Nam",
-                        "shortcut": ""
-                    },
-                    {
-                        "value": "female",
-                        "label": "Nữ",
-                        "shortcut": ""
-                    },
-                    {
-                        "value": "other",
-                        "label": "Khác",
-                        "shortcut": ""
-                    }
-                ],
-                "defaultValue": "",
-                "protected": false,
-                "fieldSet": false,
-                "persistent": true,
-                "hidden": false,
-                "clearOnHide": true,
-                "validate": {
-                    "required": false,
-                    "custom": "",
-                    "customPrivate": false
-                },
-                "type": "radio",
-                "labelPosition": "top",
-                "optionsLabelPosition": "right",
-                "tags": [],
-                "conditional": {
-                    "show": "",
-                    "eq": ""
-                },
-                "properties": {},
-                "lockKey": true
-            },
-            {
-                "autofocus": false,
-                "input": true,
-                "label": "Submit",
-                "tableView": false,
-                "key": "submit",
-                "size": "md",
-                "leftIcon": "",
-                "rightIcon": "",
-                "block": false,
-                "action": "submit",
-                "disableOnInvalid": false,
-                "theme": "primary",
-                "type": "button"
+            error: function (err) {
+                console.log(err);
             }
-        ]
-    });
+        })
+    }
+
+    function generateForm(components) {
+        Formio.createForm(document.getElementById('builder'), {components});
+    }
 </script>
 </body>
 </html>

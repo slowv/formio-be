@@ -1,6 +1,5 @@
 package com.cimb.demo.service.impl;
 
-import com.cimb.demo.repository.AccessRepository;
 import com.cimb.demo.repository.FormRepository;
 import com.cimb.demo.service.FormService;
 import com.cimb.demo.service.dto.FormDTO;
@@ -22,6 +21,15 @@ public class FormServiceImpl implements FormService {
         log.debug("Request to save Form : {}", formDTO);
         final var formEntity = formMapper.toEntity(formDTO);
         return formMapper.toDto(formRepository.save(formEntity));
+    }
+
+    @Override
+    public FormDTO update(String formId, final FormDTO formDTO) {
+        final var formExist = formRepository.getReferenceById(formId);
+        final var formNew = formMapper.toEntity(formDTO);
+        formNew.setCode(formExist.getCode());
+        formNew.setCreatedDate(formExist.getCreatedDate());
+        return formMapper.toDto(formRepository.save(formNew));
     }
 
     @Override

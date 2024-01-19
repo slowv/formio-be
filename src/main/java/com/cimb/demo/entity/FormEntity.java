@@ -44,11 +44,15 @@ public class FormEntity extends AbstractAuditingEntity<String> implements Serial
     @UuidGenerator
     private String id;
 
+    @Column(name = "code")
+    @UuidGenerator
+    private String code;
+
     @Column(name = "title", nullable = false)
     @Comment("The title for the form.")
     private String title;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     @Comment("The machine name for this form.")
     private String name;
 
@@ -70,19 +74,11 @@ public class FormEntity extends AbstractAuditingEntity<String> implements Serial
     @Column(name = "components", columnDefinition = "json")
     private String components;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "form_access",
-            joinColumns = @JoinColumn(name = "access_id"),
-            inverseJoinColumns = @JoinColumn(name = "forms_id"))
-    private Set<AccessEntity> access = new HashSet<>();
+    @Column(name = "access", columnDefinition = "json")
+    private String access;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "form_submission",
-            joinColumns = @JoinColumn(name = "submission_id"),
-            inverseJoinColumns = @JoinColumn(name = "form_id"))
-    private Set<AccessEntity> submissionAccess = new HashSet<>();
+    @Column(name = "submission_access", columnDefinition = "json")
+    private String submissionAccess;
 
     @Column(name = "settings", columnDefinition = "json")
     @Comment("Custom form settings json object.")
@@ -91,7 +87,4 @@ public class FormEntity extends AbstractAuditingEntity<String> implements Serial
     @Column(name = "properties", columnDefinition = "json")
     @Comment("Custom form json properties.")
     private String properties;
-
-    @OneToMany(mappedBy = "form")
-    private List<ActionEntity> actions = new ArrayList<>();
 }

@@ -6,5 +6,7 @@ public interface FormService {
 
     FormDTO save(final FormDTO formDTO);
 
+    FormDTO update(String formId, final FormDTO formDTO);
+
     FormDTO get(final String formId);
 }
