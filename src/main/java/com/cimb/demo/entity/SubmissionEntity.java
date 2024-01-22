@@ -44,6 +44,8 @@ public class SubmissionEntity extends AbstractAuditingEntity<String> implements 
 //            joinColumns = @JoinColumn(name = "role_id"),
 //            inverseJoinColumns = @JoinColumn(name = "submission_id"))
 //    private List<RoleEntity> role = new ArrayList<>();
+    @UuidGenerator
+    private String code;
 
     @Column(name = "access", columnDefinition = "json")
     private String access;
