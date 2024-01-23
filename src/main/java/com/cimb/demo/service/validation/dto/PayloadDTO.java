@@ -1,7 +1,12 @@
 package com.cimb.demo.service.validation.dto;
 
+import com.cimb.demo.service.validation.Validator;
 import com.google.gson.JsonObject;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 public class PayloadDTO {
@@ -18,24 +23,15 @@ public class PayloadDTO {
     private String customMsg;
     private int min;
     private int max;
+    private List<Validator> validators = new ArrayList<>();
 
-    public void setRequired(final String required) {
-        this.required = Boolean.parseBoolean(required);
+    public List<ValidationResult> validate() {
+        return this.validators.stream()
+                .map(validator -> validator.execute(this))
+                .filter(Objects::nonNull)
+                .toList();
     }
-
-    public void setMaxLength(final String maxLength) {
-        this.maxLength = Integer.parseInt(maxLength);
-    }
-
-    public void setMinLength(final String minLength) {
-        this.minLength = Integer.parseInt(minLength);
-    }
-
-    public void setMin(final String min) {
-        this.min = Integer.parseInt(min);
-    }
-
-    public void setMax(final String max) {
-        this.max = Integer.parseInt(max);
+    public void addValidator(Validator validator) {
+        this.validators.add(validator);
     }
 }

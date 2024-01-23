@@ -3,30 +3,27 @@ package com.cimb.demo.service.validation;
 import com.cimb.demo.service.validation.dto.PayloadDTO;
 import com.cimb.demo.service.validation.dto.ValidationResult;
 import com.google.gson.JsonElement;
+import com.jayway.jsonpath.JsonPath;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import static com.cimb.demo.common.constants.BeanConstants.FORM_START_WITH_VALIDATOR;
+import static com.cimb.demo.common.utils.JsonUtil.getJsonValue;
 
 @Component(FORM_START_WITH_VALIDATOR)
 public class StartWithValidator implements Validator {
     @Override
     public ValidationResult execute(final PayloadDTO payload) {
-        final var data = payload.getData();
-        final var key = payload.getKey();
-       if (!validData(payload)) return null;
+        final var data = getJsonValue(JsonPath.parse(payload.getData()), "@.%s".formatted(payload.getKey()), String.class);
+        if (ObjectUtils.isEmpty(data)) return null;
 
-        boolean result = true;
         final var customMsg = payload.getCustomMsg();
         String msg = customMsg;
+        if (data.startsWith(payload.getPrefix())) return null;
 
-        final var jsonElement = data.get(key);
-        if (!ObjectUtils.isEmpty(jsonElement) && !jsonElement.getAsString().startsWith(payload.getPrefix())) {
-            result = false;
-            if (ObjectUtils.isEmpty(customMsg)) {
-                msg = "Field {%s} must be require!".formatted(key);
-            }
+        if (ObjectUtils.isEmpty(customMsg)) {
+            msg = "Field {%s} must be require!".formatted(payload.getKey());
         }
-        return result ? null : new ValidationResult(msg, result);
+        return new ValidationResult(msg, false);
     }
 }
