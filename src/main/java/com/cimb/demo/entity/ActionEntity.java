@@ -1,12 +1,7 @@
 package com.cimb.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.cimb.demo.common.converter.ConverterFieldListString;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
@@ -14,6 +9,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,10 +34,12 @@ public class ActionEntity extends AbstractAuditingEntity<String> implements Seri
     private String name;
 
     @Column(name = "handler", nullable = false)
-    private String handler;
+    @Convert(converter = ConverterFieldListString.class)
+    private List<String> handler;
 
     @Column(name = "method", nullable = false)
-    private String method;
+    @Convert(converter = ConverterFieldListString.class)
+    private List<String> method;
 
     @Column(name = "machineName")
     private String machineName;
@@ -56,6 +54,9 @@ public class ActionEntity extends AbstractAuditingEntity<String> implements Seri
 
     @Column(name = "priority", nullable = false)
     private float priority;
+
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "settings")
     private String settings;
