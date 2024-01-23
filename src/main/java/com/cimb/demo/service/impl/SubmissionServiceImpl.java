@@ -30,15 +30,8 @@ public class SubmissionServiceImpl implements SubmissionService {
     public SubmissionDTO save(final SubmissionDTO submissionDTO) {
         log.debug("Request to save Submission : {}", submissionDTO);
         final var entity = submissionMapper.toEntity(submissionDTO);
-
-        final List<String> obj = JsonPath.read(
-                entity.getForm().getComponents(),
-                "@[*].values[?]",
-                filter(where("label").is("Nam"))
-        );
-//        System.out.println(obj);
-
         final var extract = validatorDataExtractor.extract(entity);
+
         if (ObjectUtils.isEmpty(extract)) {
             return submissionMapper.toDto(submissionRepository.save(entity));
         }
