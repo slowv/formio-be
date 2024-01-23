@@ -1,12 +1,19 @@
 package com.cimb.demo.service.impl;
 
+import com.cimb.demo.entity.FormEntity;
+import com.cimb.demo.entity.enums.FormType;
 import com.cimb.demo.repository.FormRepository;
 import com.cimb.demo.service.FormService;
 import com.cimb.demo.service.dto.FormDTO;
+import com.cimb.demo.service.dto.request.PagingRequest;
+import com.cimb.demo.service.dto.response.PagingResponse;
 import com.cimb.demo.service.mapper.FormMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -36,5 +43,16 @@ public class FormServiceImpl implements FormService {
     public FormDTO get(final String formId) {
         log.debug("Request to get FormId : {}", formId);
         return formMapper.toDto(formRepository.getReferenceById(formId));
+    }
+
+    @Override
+    public PagingResponse<FormDTO> getFormByType(FormType type, PagingRequest request) {
+        log.debug("Request to get all Form by type : {}", type);
+        Page<FormEntity> forms = formRepository.findAllByType(type, request.pageable());
+        List<FormDTO> responses = forms.stream().map(formMapper::toDto).toList();
+        return new PagingResponse<>(responses,
+                forms.getTotalElements(),
+                forms.getTotalPages(),
+                request);
     }
 }
