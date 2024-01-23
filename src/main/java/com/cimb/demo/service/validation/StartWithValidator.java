@@ -2,7 +2,6 @@ package com.cimb.demo.service.validation;
 
 import com.cimb.demo.service.validation.dto.PayloadDTO;
 import com.cimb.demo.service.validation.dto.ValidationResult;
-import com.google.gson.JsonElement;
 import com.jayway.jsonpath.JsonPath;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
