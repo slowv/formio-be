@@ -19,7 +19,7 @@ public class PayloadDTO {
     private String prefix;
     private String suffix;
     private String formId;
-    private JsonObject data;
+    private Object data;
     private String customMsg;
     private int min;
     private int max;

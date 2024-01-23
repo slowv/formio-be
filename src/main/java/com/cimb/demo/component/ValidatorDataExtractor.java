@@ -58,6 +58,7 @@ public class ValidatorDataExtractor {
         final var payload = new PayloadDTO();
         final var context = parse(component);
         payload.setFormId(formId);
+        payload.setData(data);
 
         setValue(KEY_PREFIX, PayloadDTO::setPrefix, payload, getJsonValue(context, "@.%s".formatted(KEY_PREFIX), String.class));
         setValue(KEY_SUFFIX, PayloadDTO::setSuffix, payload, getJsonValue(context, "@.%s".formatted(KEY_SUFFIX), String.class));
