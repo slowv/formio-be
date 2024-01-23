@@ -5,7 +5,14 @@ import com.cimb.demo.service.validation.Validator;
 import com.cimb.demo.service.validation.dto.PairResultValidation;
 import com.cimb.demo.service.validation.dto.PayloadDTO;
 import com.cimb.demo.service.validation.dto.ValidationResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.ParseContext;
 import com.jayway.jsonpath.TypeRef;
+import com.jayway.jsonpath.spi.json.GsonJsonProvider;
+import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -42,9 +49,12 @@ public class ValidatorDataExtractor {
     /**
      * @param submission is data submitted, read more info here {@link SubmissionEntity}
      */
+    @SuppressWarnings("unchecked")
     public Map<String, List<ValidationResult>> extract(final SubmissionEntity submission) {
-        return parse(submission.getForm().getComponents())
-                .read("@[?]", new TypeRef<List<String>>() {})
+        final List<Object> components = (List<Object>) parse(submission.getForm().getComponents())
+                .read("@[*]", List.class);
+
+        return components
                 .stream()
                 .map(component -> getPayload(component, submission.getForm().getId(), submission.getData()))
                 .map(payload -> new PairResultValidation(
@@ -54,7 +64,7 @@ public class ValidatorDataExtractor {
                 .collect(Collectors.toMap(PairResultValidation::key, PairResultValidation::validationResults));
     }
 
-    private PayloadDTO getPayload(Object component, String formId, Object data) {
+    private PayloadDTO getPayload(Object component, String formId, String data) {
         final var payload = new PayloadDTO();
         final var context = parse(component);
         payload.setFormId(formId);
