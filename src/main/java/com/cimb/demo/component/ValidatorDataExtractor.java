@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.cimb.demo.service.validation.dto.PayloadMapValue.all;
 import static com.jayway.jsonpath.JsonPath.parse;
 
 @Component
