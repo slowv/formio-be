@@ -26,6 +26,11 @@ public class PayloadDTO {
     private int max;
     private List<Validator> validators = new ArrayList<>();
 
+    public PayloadDTO(String formId, String data) {
+        this.formId = formId;
+        this.data = data;
+    }
+
     public List<ValidationResult> validate() {
         return this.validators.stream()
                 .map(validator -> validator.execute(this))
@@ -36,12 +41,6 @@ public class PayloadDTO {
     public void addValidator(Validator validator) {
         if (ObjectUtils.isEmpty(validator)) return;
         this.validators.add(validator);
-    }
-
-    public PayloadDTO get(String formId, String data) {
-        this.setFormId(formId);
-        this.setData(data);
-        return this;
     }
 
     public PayloadDTO addValidator(PayloadMapValue<?> map) {
