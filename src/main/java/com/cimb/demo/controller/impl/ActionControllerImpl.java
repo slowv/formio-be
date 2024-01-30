@@ -21,7 +21,7 @@ public class ActionControllerImpl implements ActionController {
         log.debug("REST request to save Action : {}", actionDTO);
         final var result = actionService.save(actionDTO);
         return ResponseEntity
-                .created(URI.create("/api/actions"))
+                .created(URI.create("/api/actions/%s".formatted(result.getId())))
                 .body(result);
     }
 }

@@ -17,7 +17,8 @@
 <script>
     const BASE_URL = "http://localhost:8080";
     $(document).ready(() => {
-        loadFormAPI('0eed6580-5a12-4d52-971b-62fdff895a24')
+        // loadFormAPI('0eed6580-5a12-4d52-971b-62fdff895a24')
+        generateForm(null);
     })
 
     function loadFormAPI(formId) {
@@ -34,7 +35,104 @@
     }
 
     function generateForm(components) {
-        Formio.createForm(document.getElementById('builder'), {components});
+        Formio.createForm(document.getElementById('builder'),
+            {
+                components: [{
+                    "autofocus": false,
+                    "input": true,
+                    "tableView": true,
+                    "inputType": "text",
+                    "inputMask": "",
+                    "label": "Họ và tên",
+                    "key": "formOpenCard_fullName",
+                    "placeholder": "",
+                    "prefix": "",
+                    "suffix": "",
+                    "multiple": false,
+                    "defaultValue": "",
+                    "protected": false,
+                    "unique": false,
+                    "persistent": true,
+                    "hidden": false,
+                    "clearOnHide": true,
+                    "spellcheck": true,
+                    "validate": {
+                        "required": true,
+                        "minLength": "",
+                        "maxLength": "",
+                        "pattern": "",
+                        "custom": "",
+                        "customPrivate": false
+                    },
+                    "conditional": {"show": "", "when": null, "eq": ""},
+                    "type": "textfield",
+                    "labelPosition": "top",
+                    "inputFormat": "html",
+                    "tags": [],
+                    "properties": {},
+                    "lockKey": true
+                }, {
+                    "autofocus": false,
+                    "input": true,
+                    "tableView": true,
+                    "label": "Địa chỉ",
+                    "key": "formOpenCard_address",
+                    "placeholder": "",
+                    "data": {
+                        "values": [{"value": "", "label": ""}],
+                        "json": "",
+                        "url": "https://provinces.open-api.vn/api/",
+                        "resource": "",
+                        "custom": "",
+                        "headers": [{"value": "", "key": ""}]
+                    },
+                    "dataSrc": "url",
+                    "valueProperty": "name",
+                    "defaultValue": "",
+                    "refreshOn": "",
+                    "filter": "",
+                    "authenticate": false,
+                    "template": "<span>{{ item.name }}</span>",
+                    "multiple": false,
+                    "protected": false,
+                    "unique": false,
+                    "persistent": true,
+                    "hidden": false,
+                    "clearOnHide": true,
+                    "validate": {"required": true},
+                    "type": "select",
+                    "labelPosition": "top",
+                    "tags": [],
+                    "conditional": {"show": "", "when": null, "eq": ""},
+                    "properties": {},
+                    "lockKey": true
+                }, {
+                    "autofocus": false,
+                    "input": true,
+                    "inputType": "checkbox",
+                    "tableView": true,
+                    "label": "Xác nhận điều khoản",
+                    "dataGridLabel": false,
+                    "key": "formOpenCard_policy",
+                    "defaultValue": false,
+                    "protected": false,
+                    "persistent": true,
+                    "hidden": false,
+                    "name": "",
+                    "value": "",
+                    "clearOnHide": true,
+                    "validate": {"required": true},
+                    "type": "checkbox",
+                    "labelPosition": "right",
+                    "hideLabel": false,
+                    "tags": [],
+                    "conditional": {"show": "", "when": null, "eq": ""},
+                    "properties": {},
+                    "lockKey": true,
+                    "isNew": false
+                }]
+            }
+        );
     }
 </script>
 </body>

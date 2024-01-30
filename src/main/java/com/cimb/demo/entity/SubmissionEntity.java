@@ -38,12 +38,6 @@ public class SubmissionEntity extends AbstractAuditingEntity<String> implements 
     @JoinColumn(name = "form_id", referencedColumnName = "id", nullable = false)
     private FormEntity form;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "submission_role",
-//            joinColumns = @JoinColumn(name = "role_id"),
-//            inverseJoinColumns = @JoinColumn(name = "submission_id"))
-//    private List<RoleEntity> role = new ArrayList<>();
     @UuidGenerator
     private String code;
 

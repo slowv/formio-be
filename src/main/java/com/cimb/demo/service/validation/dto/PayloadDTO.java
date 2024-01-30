@@ -1,8 +1,9 @@
 package com.cimb.demo.service.validation.dto;
 
 import com.cimb.demo.service.validation.Validator;
-import com.google.gson.JsonObject;
 import lombok.Data;
+import org.springframework.context.ApplicationContext;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,30 @@ public class PayloadDTO {
                 .filter(Objects::nonNull)
                 .toList();
     }
+
     public void addValidator(Validator validator) {
+        if (ObjectUtils.isEmpty(validator)) return;
         this.validators.add(validator);
+    }
+
+    public PayloadDTO get(String formId, String data) {
+        this.setFormId(formId);
+        this.setData(data);
+        return this;
+    }
+
+    public PayloadDTO addValidator(PayloadMapValue<?> map) {
+        this.addValidator(map.setValue(this));
+        return this;
+    }
+
+    public PayloadDTO addValidator(List<PayloadMapValue<?>> maps) {
+        maps.forEach(this::addValidator);
+        return this;
+    }
+
+    public PayloadDTO allValidator(ApplicationContext applicationContext, Object component) {
+        this.addValidator(PayloadMapValue.all(applicationContext, component));
+        return this;
     }
 }
