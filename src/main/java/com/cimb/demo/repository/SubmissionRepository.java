@@ -1,6 +1,8 @@
 package com.cimb.demo.repository;
 
 import com.cimb.demo.entity.SubmissionEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +29,6 @@ public interface SubmissionRepository extends JpaRepository<SubmissionEntity, St
             @Param("value") Object value,
             @Param("formId") String formId
     );
+
+    Page<SubmissionEntity> findAllByFormId(String formId, Pageable pageable);
 }
