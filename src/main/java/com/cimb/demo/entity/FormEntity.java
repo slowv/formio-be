@@ -65,8 +65,8 @@ public class FormEntity extends AbstractAuditingEntity<String> implements Serial
     @Comment("The display method for this form.")
     private String display;
 
-    @Column(name = "action")
-    private String action;
+    @OneToMany(mappedBy = "form")
+    private List<ActionEntity> actions = new ArrayList<>();
 
     @Column(name = "tags")
     private String tags;

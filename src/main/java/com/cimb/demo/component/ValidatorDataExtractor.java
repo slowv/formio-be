@@ -32,8 +32,8 @@ public class ValidatorDataExtractor {
         return components
                 .stream()
                 .map(component ->
-                        new PayloadDTO(submission.getForm().getId(), submission.getData())
-                                .allValidator(applicationContext, component)
+                        new PayloadDTO(submission.getForm().getId(), submission.getData(), component, applicationContext)
+                                .allValidator()
                 )
                 .map(payload -> new PairResultValidation(
                         payload.getKey(),

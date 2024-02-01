@@ -8,11 +8,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import static com.cimb.demo.common.constants.BeanConstants.FORM_REQUIRED_VALIDATOR;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_REQUIRED;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_VALIDATE;
 import static com.cimb.demo.common.utils.JsonUtil.getJsonValue;
 
 @Slf4j
 @Component(FORM_REQUIRED_VALIDATOR)
-public class RequiredValidator implements Validator {
+public class RequiredValidator extends Validator {
+
+    public RequiredValidator() {
+        super("$.%s.%s".formatted(KEY_VALIDATE, KEY_REQUIRED));
+    }
 
     @Override
     public ValidationResult execute(final PayloadDTO payload) {

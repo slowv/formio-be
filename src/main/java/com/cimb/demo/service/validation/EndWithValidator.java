@@ -7,10 +7,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import static com.cimb.demo.common.constants.BeanConstants.FORM_END_WITH_VALIDATOR;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_SUFFIX;
 import static com.cimb.demo.common.utils.JsonUtil.getJsonValue;
 
 @Component(FORM_END_WITH_VALIDATOR)
-public class EndWithValidator implements Validator {
+public class EndWithValidator extends Validator {
+    public EndWithValidator() {
+        super("$.%s".formatted(KEY_SUFFIX));
+    }
+
     @Override
     public ValidationResult execute(final PayloadDTO payload) {
         final var data = getJsonValue(JsonPath.parse(payload.getData()), "@.%s".formatted(payload.getKey()), String.class);

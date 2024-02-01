@@ -9,10 +9,16 @@ import org.springframework.util.ObjectUtils;
 import java.util.regex.Pattern;
 
 import static com.cimb.demo.common.constants.BeanConstants.FORM_PATTERN_VALIDATOR;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_PATTERN;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_VALIDATE;
 import static com.cimb.demo.common.utils.JsonUtil.getJsonValue;
 
 @Component(FORM_PATTERN_VALIDATOR)
-public class PatternValidator implements Validator {
+public class PatternValidator extends Validator {
+    public PatternValidator() {
+        super("$.%s.%s".formatted(KEY_VALIDATE, KEY_PATTERN));
+    }
+
     @Override
     public ValidationResult execute(final PayloadDTO payload) {
         final var data = getJsonValue(JsonPath.parse(payload.getData()), "@.%s".formatted(payload.getKey()), String.class);

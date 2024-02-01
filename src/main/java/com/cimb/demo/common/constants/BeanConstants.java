@@ -22,6 +22,9 @@ public final class BeanConstants {
     public static final String KEY_CUSTOM_MESSAGE = "customMessage";
 
     // Key name Bean
+    public static final String SPECIAL_DAY = "day";
+    public static final String SPECIAL_MONTH = "month";
+    public static final String SPECIAL_YEAR = "year";
     public static final String BEAN_VALIDATOR = "formValidator";
     // Bean name Validators
     public static final String FORM_REQUIRED_VALIDATOR = KEY_REQUIRED + BEAN_VALIDATOR;

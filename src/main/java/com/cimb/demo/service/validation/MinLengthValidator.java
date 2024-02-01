@@ -7,10 +7,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import static com.cimb.demo.common.constants.BeanConstants.FORM_MIN_LENGTH_VALIDATOR;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_MIN_LENGTH;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_VALIDATE;
 import static com.cimb.demo.common.utils.JsonUtil.getJsonValue;
 
 @Component(FORM_MIN_LENGTH_VALIDATOR)
-public class MinLengthValidator implements Validator{
+public class MinLengthValidator extends Validator {
+    public MinLengthValidator() {
+        super("$.%s.%s".formatted(KEY_VALIDATE, KEY_MIN_LENGTH));
+    }
+
     @Override
     public ValidationResult execute(final PayloadDTO payload) {
         final var data = getJsonValue(JsonPath.parse(payload.getData()), "@.%s".formatted(payload.getKey()), String.class);
