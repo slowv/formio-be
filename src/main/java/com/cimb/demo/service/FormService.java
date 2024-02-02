@@ -5,6 +5,8 @@ import com.cimb.demo.service.dto.FormDTO;
 import com.cimb.demo.service.dto.request.PagingRequest;
 import com.cimb.demo.service.dto.response.PagingResponse;
 
+import java.util.List;
+
 public interface FormService {
 
     FormDTO save(final FormDTO formDTO);
@@ -14,4 +16,6 @@ public interface FormService {
     FormDTO get(final String formId);
 
     PagingResponse<FormDTO> getFormByType(FormType type, PagingRequest request);
+
+    List<FormDTO> all();
 }

@@ -1,0 +1,22 @@
+route-outlet {
+    /*background: var(--white);*/
+    display: block;
+    padding: 10px;
+}
+
+:root {
+    --nav-width: 300px;
+    --white: #fff;
+    --m-p-basic: 20px;
+    --secondary: #606060;
+}
+
+body {
+    /*margin: 0 0 0 var(--nav-width);*/
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+}
+
+.formio {
+
+}

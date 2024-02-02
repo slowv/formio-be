@@ -1,0 +1,25 @@
+{
+  "name": "formiocimb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "slv": "node server.js",
+    "start": "nodemon --experimental-modules server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "express": "^4.17.1",
+    "lemonadejs": "^4.1.1",
+    "lit": "^2.2.0"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.21",
+    "nodemon": "^2.0.15"
+  },
+  "type": "commonjs"
+}

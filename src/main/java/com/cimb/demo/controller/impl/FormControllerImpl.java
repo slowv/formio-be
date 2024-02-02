@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.List;
 
 @Slf4j
 @CrossOrigin("*")
@@ -50,5 +51,10 @@ public class FormControllerImpl implements FormController {
     @Override
     public ResponseEntity<FormDTO> update(final String formId, final FormDTO formDTO) {
         return ResponseEntity.ok(formService.update(formId, formDTO));
+    }
+
+    @Override
+    public ResponseEntity<List<FormDTO>> all() {
+        return ResponseEntity.ok(formService.all());
     }
 }

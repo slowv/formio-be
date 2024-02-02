@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RequestMapping(value = "/api/forms")
 public interface FormController {
@@ -36,4 +37,8 @@ public interface FormController {
     @PutMapping("/{formId}")
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity<FormDTO> update(@PathVariable("formId") String formId, @RequestBody @Valid FormDTO formDTO);
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    ResponseEntity<List<FormDTO>> all();
 }

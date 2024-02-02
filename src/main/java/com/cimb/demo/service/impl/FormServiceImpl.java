@@ -55,4 +55,9 @@ public class FormServiceImpl implements FormService {
                 forms.getTotalPages(),
                 request);
     }
+
+    @Override
+    public List<FormDTO> all() {
+        return formMapper.toDto(formRepository.findAll());
+    }
 }

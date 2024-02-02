@@ -10,13 +10,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import static com.cimb.demo.common.constants.BeanConstants.FORM_UNIQUE_VALIDATOR;
+import static com.cimb.demo.common.constants.BeanConstants.KEY_UNIQUE;
 import static com.cimb.demo.common.utils.JsonUtil.getJsonValue;
 
 @Slf4j
 @Component(FORM_UNIQUE_VALIDATOR)
-@RequiredArgsConstructor
-public class UniqueValidator implements Validator {
+public class UniqueValidator extends Validator {
     private final SubmissionRepository submissionRepository;
+
+    public UniqueValidator(SubmissionRepository submissionRepository) {
+        super("$.%s".formatted(KEY_UNIQUE));
+        this.submissionRepository = submissionRepository;
+    }
 
     @Override
     public ValidationResult execute(final PayloadDTO payload) {
