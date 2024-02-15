@@ -1,48 +1,25 @@
-import LogUtils from "./utils/log.util.js";
 import FormService from "./service/form.service.js";
 import {style} from "./app.css.js";
-import App from "./app.js";
+import {useNavigate} from "./core/ApplicationContext.js";
+import CssRoot from "./core/CssRoot.js";
 
 
 export default class AppComponent extends HTMLElement {
     static tag = "app-component";
     constructor() {
         super();
-        this.attachShadow({
-            mode: 'open'
-        });
         this.onInit();
     }
 
     onInit() {
         this._formService = FormService.getInstance();
-        this._navigateTo = this.toDetail.bind(this, "");
-        this._log = new LogUtils('~s.app.AppComponent');
+        this.toDetailPage = this.toDetail;
     }
 
     connectedCallback() {
-        this.render();
-        // $('[routerLink]').forEach(card => {
-        //     const uri = card.getAttribute("routerLink");
-        //     card.onclick = (e) => {
-        //         e.preventDefault();
-        //         App.router.navigate(uri);
-        //     }
-        // });
-    }
-
-    disconnectedCallback() {
-        this.shadowRoot.querySelectorAll('[routerLink]')
-            .forEach(elm => elm.removeEventListener('click', this._navigateTo))
-    }
-
-    toDetail(event, formId) {
-        console.log(event)
-        console.log(formId)
-    }
-
-
-    render() {
+        let shadowRoot = this.attachShadow({
+            mode: 'open'
+        });
         let content = '';
         this._formService.getForms().then(res => {
             content += `<ul class="list-group">`
@@ -54,16 +31,24 @@ export default class AppComponent extends HTMLElement {
                 `
             })
             content += '</ul>'
-            this.updateView(content)
-        });
+            shadowRoot.innerHTML = CssRoot.style + content;
+        }).then(() => this.addEvents(shadowRoot));
     }
 
-    updateView(content) {
-        this.shadowRoot.innerHTML = style + content;
-        this.shadowRoot.querySelectorAll('[routerLink]')
+    disconnectedCallback() {
+        this.shadowRoot.removeEventListener('click', this.toDetailPage)
+    }
+
+    toDetail(link) {
+        console.log(link)
+        useNavigate().navigate(link);
+    }
+
+    addEvents(shadowRoot) {
+        shadowRoot.querySelectorAll('[routerLink]')
             .forEach(elm => {
                 let link = elm.getAttribute('routerLink');
-                elm.addEventListener('click', () => this._navigateTo(this, link));
+                elm.addEventListener('click', () => this.toDetailPage(link));
             })
     };
 }

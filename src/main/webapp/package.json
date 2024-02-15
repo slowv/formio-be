@@ -12,10 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@wirebootstrap/wire-bootstrap": "^2.1.9",
     "axios": "^1.6.7",
     "express": "^4.17.1",
     "lemonadejs": "^4.1.1",
-    "lit": "^2.2.0"
+    "lit": "^2.2.0",
+    "tinybind": "^1.0.0"
   },
   "devDependencies": {
     "lodash": "^4.17.21",

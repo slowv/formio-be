@@ -3,7 +3,6 @@ import CssRoot from "../../../core/CssRoot.js";
 
 export default class FormDetailComponent extends HTMLElement {
     static tag = "form-detail-component";
-    formService;
 
     content = `
         <div class="form">
@@ -35,11 +34,11 @@ export default class FormDetailComponent extends HTMLElement {
     render() {
         this.formService.getForm(this.id).then(res => {
             this.updateView(this.content)
-            Formio.createForm(this.shadowRoot.getElementById('formio'), {components: res.components})
+                .then(() => Formio.createForm(this.shadowRoot.getElementById('formio'), {components: res.components}));
         });
     }
 
-    updateView(content) {
+    async updateView(content) {
         this.shadowRoot.innerHTML = CssRoot.style + content;
     }
 }
